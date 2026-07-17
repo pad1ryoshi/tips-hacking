@@ -1,0 +1,15 @@
+active-subs() {
+    local domain=$1
+    local resolvers="resolvers-trusted.txt"
+    local wordlist="/root/wordlists/nodes/best-dns-wordlist.txt"
+
+    if [ ! -f "$resolvers" ]; then
+        wget -q https://raw.githubusercontent.com/trickest/resolvers/main/resolvers-trusted.txt -O "$resolvers"
+    fi
+
+    nsips "$domain" >> "$resolvers"
+
+    shuffledns -d "$domain" -w "$wordlist" -r "$resolvers" -mode bruteforce -silent -o "active-subs-$domain.txt"
+
+    echo "[!] Concluído: active-subs-$domain.txt"
+}

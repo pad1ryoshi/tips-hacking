@@ -1,0 +1,3 @@
+nsips(){
+  for ns in $(dig +short NS $1); do dig +short A $ns; dig +short AAAA $ns; done
+}

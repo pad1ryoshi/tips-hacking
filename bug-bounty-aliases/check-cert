@@ -1,0 +1,6 @@
+check-cert(){
+  echo | openssl s_client -showcerts -connect $1:443 2>/dev/null | \
+  openssl x509 -noout -text | \
+  grep -oP 'DNS:([^,]+)' | \
+  sed 's/DNS://g' | tr -d ' ' | sort -u
+}
